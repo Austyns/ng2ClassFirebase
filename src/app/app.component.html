@@ -1,0 +1,71 @@
+<div class="container">
+	<h1>Meet the Fellows</h1>
+<h3><i>{{title}}</i></h3>
+<span class="pull-right">	
+	<button class="btn btn-success btn-md" (click)="addFellow = true" *ngIf="!addFellow" >Add A new fellow</button>
+	<!-- <button class="btn btn-warning btn-md" (click)="addFellow = false" *ngIf="addFellow"> Cancel </button> -->
+</span>
+<div class="container col-md-8" [hidden]="!addFellow">
+	<form>
+		<div class="form-group">
+			<label>S/N</label>
+			<input type="number" name="id" class="form-control"  [(ngModel)]="felo.id" >
+		</div>
+		<div class="form-group">
+			<label>Name of Fellow</label>
+			<input type="text" name="name" class="form-control"  [(ngModel)]="felo.name" >
+		</div>
+		<div class="form-group">
+			<label>Strength</label>
+			<input type="text" name="strength" class="form-control"  [(ngModel)]="felo.strength" >
+		</div>
+		<div class="form-group">
+			<button class="btn btn-primary btn-lg" type="button" (click)=addNewFellow(felo)> Add</button>
+			<button class="btn btn-danger btn-lg" type="button" (click)="addFellow = false"> Cancel</button>
+		</div>
+	</form>
+</div>
+<table class="table" [hidden]="addFellow || editable">
+	<thead>
+		<tr>
+			<th>S/N</th>
+			<th>NAME</th>
+			<th>STRENGTH</th>
+			<th>ACTIONS</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let fellow of fellows | async; let i = index">
+			<td>{{i + 1}}</td>
+			<td>{{fellow.name}}</td>
+			<td>{{fellow.strength}}</td>
+			<td>
+				<button class="btn btn-sm btn-info" (click)="editFellow(fellow)"> Edit </button>
+				<button class="btn btn-sm btn-danger" 
+				(click)="deleteSelected(fellow.$key)"> Delete </button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="container col-md-8" *ngIf="editable" >
+	<form>
+		<div class="form-group">
+			<label>S/N</label>
+			<input type="number" name="id" class="form-control" [(ngModel)]="felos.id" >
+		</div>
+		<div class="form-group">
+			<label>Name of Fellow</label>
+			<input type="text" name="name" class="form-control" [(ngModel)]="felos.name" >
+		</div>
+		<div class="form-group">
+			<label>Strength</label>
+			<input type="text" name="strength" class="form-control" [(ngModel)]="felos.strength">
+		</div>
+		<div class="form-group">
+			<button class="btn btn-primary btn-lg" type="button" (click)="editable = false; updateFellow(felos.$key, felos)"> Add</button>
+			<button class="btn btn-danger btn-lg" type="button" (click)="editable = false"> Cancel</button>
+		</div>
+	</form>
+</div>
+</div>
